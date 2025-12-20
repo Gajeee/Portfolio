@@ -43,6 +43,9 @@
     body{
       margin:0;
       font-family:'Inter',sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
       color:var(--text);
       line-height:1.7;
 
@@ -96,8 +99,11 @@
       text-decoration:none;
       opacity:.95;
       transition: opacity .2s ease, color .2s ease, transform .2s ease;
+      -webkit-tap-highlight-color: transparent;
     }
     a:hover{ opacity:1; }
+
+    button{ -webkit-tap-highlight-color: transparent; }
 
     .card p a{
       position:relative;
@@ -2600,6 +2606,14 @@ body.is-scrolling .stat{
         </a>
         <div class="contact-label">Link</div>
       </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; min-width:0;">
+        <a class="contact-icon" data-label="LinkedIn" href="https://www.linkedin.com/in/gajenes-asitambi-411049347" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        <div class="contact-label">LinkedIn</div>
+      </div>
+
 
       <div style="display:flex; flex-direction:column; align-items:center; min-width:0;">
         <a class="contact-icon" data-label="WhatsApp" href="https://wa.me/601168107425" target="_blank" rel="noopener" aria-label="WhatsApp (+60 11-6810 7425)">
