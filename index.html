@@ -652,72 +652,99 @@
     }
 
     /* =========================================
-       MOCKUP 1: NOVA DATA (SaaS Dashboard) - UPDATED
+       MOCKUP 1: BETWEEN US (React App)
        ========================================= */
-    .mockup-1 { background: #f8fafc; display: flex; color: #0f172a; }
+    .mockup-1 { background: #FFFFFF; display: flex; flex-direction: column; color: #000; font-family: 'Inter', sans-serif; position: relative; }
     
-    .m1-sidebar { width: 40px; background: #0f172a; display: flex; flex-direction: column; align-items: center; padding-top: 10px; gap: 12px;}
-    .m1-icon { width: 20px; height: 20px; background: #334155; border-radius: 6px; }
-    .m1-icon.active { background: #6366f1; }
-
-    .m1-main { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+    .bu-nav { padding: 12px 16px; font-family: 'Instrument Serif', serif; font-size: 14px; color: #000; }
     
-    .m1-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .m1-card { background: #fff; padding: 8px; border-radius: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-    .m1-card-label { font-size: 7px; color: #64748b; font-weight: 600; text-transform: uppercase; margin-bottom: 4px; }
-    .m1-card-val { font-size: 14px; font-weight: 700; color: #0f172a; }
-    .m1-card-trend { font-size: 7px; color: #10b981; display: flex; align-items: center; gap: 2px; }
-
-    /* NEW: SVG Functional Chart */
-    .m1-chart-box { background: #fff; padding: 10px; border-radius: 6px; height: 90px; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-    .chart-svg { width: 100%; height: 100%; overflow: visible; }
-    .chart-grid { stroke: #e2e8f0; stroke-width: 1; }
-    .chart-area { fill: url(#chartGradient); opacity: 0.2; }
-    .chart-line { fill: none; stroke: #6366f1; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 400; stroke-dashoffset: 400; animation: drawLine 3s ease-out forwards; }
-    .chart-dot { fill: #fff; stroke: #6366f1; stroke-width: 2; r: 3; opacity: 0; animation: fadeIn 0.5s ease 2.5s forwards; }
+    .bu-main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 20px; }
+    .bu-h1 { font-family: 'Instrument Serif', serif; font-size: 22px; line-height: 1.15; margin-bottom: 10px; color: #000; }
+    .bu-h1 span { color: #6F6F6F; font-style: italic; }
     
-    /* Live Pulse Effect on the last dot */
-    .chart-live-dot { fill: #6366f1; r: 4; opacity: 0; animation: pulseDot 2s infinite 3s; }
-    .chart-tooltip-bg { fill: #1e293b; rx: 4; opacity: 0; animation: fadeIn 0.5s ease 3s forwards; }
-    .chart-tooltip-text { fill: #fff; font-size: 6px; font-family: sans-serif; text-anchor: middle; opacity: 0; animation: fadeIn 0.5s ease 3s forwards; }
-
-    @keyframes drawLine { to { stroke-dashoffset: 0; } }
-    @keyframes fadeIn { to { opacity: 1; } }
-    @keyframes pulseDot { 0% { r: 4; opacity: 1; } 50% { r: 6; opacity: 0.5; } 100% { r: 4; opacity: 1; } }
-
-    .m1-table { width: 100%; border-collapse: collapse; font-size: 8px; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-    .m1-th { background: #f1f5f9; text-align: left; padding: 6px; font-weight: 600; color: #475569; }
-    .m1-td { padding: 6px; border-bottom: 1px solid #f1f5f9; color: #334155; }
-    .m1-status { padding: 2px 6px; border-radius: 10px; font-size: 6px; font-weight: 700; text-transform: uppercase; }
-    .m1-status.live { background: #dcfce7; color: #166534; }
-    .m1-status.pending { background: #fef9c3; color: #854d0e; }
-
+    .bu-sub { font-size: 8px; color: #6F6F6F; line-height: 1.5; max-width: 180px; margin: 0 auto 16px; }
+    
+    .bu-btn { background: #000; color: #FFF; padding: 8px 20px; border-radius: 999px; font-size: 7px; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; transition: transform 0.3s; }
+    .work-item:hover .bu-btn { transform: scale(1.05); }
+    
+    .bu-footer { padding: 8px 0; text-align: center; font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase; color: #6F6F6F; }
 
     /* =========================================
-       MOCKUP 2: AURA (Luxury E-Commerce)
+       MOCKUP 2: PASS OR CONFESS (Game App)
        ========================================= */
-    .mockup-2 { background: #fffaf0; display: flex; flex-direction: column; font-family: 'Times New Roman', serif; }
-    
-    .m2-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; border-bottom: 1px solid #e5e5e5; font-family: sans-serif; font-size: 9px; letter-spacing: 1px; color: #000; text-transform: uppercase; font-weight: 700; }
-    
-    .m2-hero { position: relative; height: 100px; overflow: hidden; }
-    .m2-hero img { width: 100%; height: 100%; object-fit: cover; }
-    .m2-hero-text { position: absolute; bottom: 10px; left: 16px; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.5); animation: fadeUp 1s ease forwards; }
-    .m2-h1 { font-size: 16px; margin: 0; letter-spacing: 2px; }
-    .m2-sub { font-family: sans-serif; font-size: 8px; margin-top: 4px; opacity: 0.9; }
-
-    .m2-products { padding: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-family: sans-serif; }
-    .m2-item { background: #fff; padding: 4px; border-radius: 4px; }
-    .m2-img { height: 50px; background: #f3f4f6; margin-bottom: 4px; position: relative; overflow: hidden; }
-    .m2-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-    .work-item:hover .m2-img img { transform: scale(1.1); }
-    
-    .m2-title { font-size: 8px; font-weight: 600; margin-bottom: 2px; color: #333; }
-    .m2-price { font-size: 8px; color: #666; margin-bottom: 4px; }
-    .m2-btn { width: 100%; padding: 4px; background: #000; color: #fff; font-size: 7px; text-align: center; border-radius: 2px; cursor: pointer; transition: background 0.2s; }
-    .work-item:hover .m2-btn { background: #333; }
-
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .mockup-2 { 
+      background: #050505; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center; 
+      position: relative;
+      color: #ffffff;
+      font-family: 'Inter', system-ui, sans-serif;
+      overflow: hidden;
+    }
+    .poc-bg {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 60%);
+      z-index: 0;
+    }
+    .poc-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 20px;
+    }
+    .poc-title {
+      font-weight: 200;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 4px;
+      color: #ffffff;
+    }
+    .poc-sub {
+      color: #aaaaaa;
+      font-size: 8px;
+      margin-bottom: 12px;
+      opacity: 0.7;
+    }
+    .poc-btn-primary {
+      background: #ffffff;
+      color: #050505;
+      font-weight: 600;
+      padding: 8px 24px;
+      border-radius: 50px;
+      font-size: 8px;
+      margin-bottom: 6px;
+      width: 75%;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .work-item:hover .poc-btn-primary { transform: scale(1.05); }
+    .poc-btn-secondary {
+      background: rgba(20, 20, 20, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      padding: 8px 24px;
+      border-radius: 50px;
+      font-size: 8px;
+      width: 75%;
+      text-align: center;
+    }
+    .poc-footer {
+      position: absolute;
+      bottom: 12px;
+      color: #aaaaaa;
+      font-size: 6px;
+      opacity: 0.5;
+      z-index: 1;
+    }
 
     /* =========================================
        MOCKUP 3: VERTEX (Architecture)
@@ -1240,128 +1267,57 @@
   <!-- WORK / UPDATED MOCKUPS -->
   <section id="work" data-watch="work">
     <div class="section-label reveal">Work</div>
-    <div class="section-title reveal reveal-delay-1">UI Design Concepts</div>
+    <div class="section-title reveal reveal-delay-1">Projects</div>
     <div class="work-grid">
       
-      <!-- 1. SaaS Dashboard (UPDATED) -->
+      <!-- 1. Between Us (React App) -->
       <div class="work-item reveal reveal-delay-1">
         <div class="device-frame">
           <div class="browser-header">
             <div class="dot red"></div>
             <div class="dot yellow"></div>
             <div class="dot green"></div>
-            <div class="address-bar">dashboard.novadata.io</div>
+            <div class="address-bar">between-us.app</div>
           </div>
           <div class="mockup-viewport mockup-1">
-            <div class="m1-sidebar">
-              <div class="m1-icon active"></div>
-              <div class="m1-icon"></div>
-              <div class="m1-icon"></div>
+            <div class="bu-nav">Between Us</div>
+            <div class="bu-main">
+              <div class="bu-h1">Beyond <span>silence</span>, we build the <span>eternal</span>.</div>
+              <div class="bu-sub">Some of the best moments in a relationship begin with a question.</div>
+              <div class="bu-btn">Begin Journey</div>
             </div>
-            <div class="m1-main">
-              <div class="m1-metrics">
-                <div class="m1-card">
-                  <div class="m1-card-label">Total Revenue</div>
-                  <div class="m1-card-val">$24.5k</div>
-                  <div class="m1-card-trend"><i class="fa-solid fa-arrow-up"></i> 12%</div>
-                </div>
-                <div class="m1-card">
-                  <div class="m1-card-label">Active Users</div>
-                  <div class="m1-card-val">1,204</div>
-                  <div class="m1-card-trend"><i class="fa-solid fa-arrow-up"></i> 5%</div>
-                </div>
-                <div class="m1-card">
-                  <div class="m1-card-label">Bounce Rate</div>
-                  <div class="m1-card-val">42%</div>
-                  <div class="m1-card-trend" style="color:#ef4444"><i class="fa-solid fa-arrow-down"></i> 2%</div>
-                </div>
-              </div>
-              
-              <!-- NEW SVG CHART -->
-              <div class="m1-chart-box">
-                <svg class="chart-svg" viewBox="0 0 300 100" preserveAspectRatio="none">
-                  <defs>
-                    <linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
-                      <stop offset="0%" stop-color="#6366f1" />
-                      <stop offset="100%" stop-color="#fff" stop-opacity="0" />
-                    </linearGradient>
-                  </defs>
-                  <!-- Grid Lines -->
-                  <line x1="0" y1="25" x2="300" y2="25" class="chart-grid" />
-                  <line x1="0" y1="50" x2="300" y2="50" class="chart-grid" />
-                  <line x1="0" y1="75" x2="300" y2="75" class="chart-grid" />
-                  
-                  <!-- The Graph Path -->
-                  <path d="M0,80 Q30,70 60,40 T120,50 T180,20 T240,60 T300,30 V100 H0 Z" class="chart-area" />
-                  <path d="M0,80 Q30,70 60,40 T120,50 T180,20 T240,60 T300,30" class="chart-line" />
-                  
-                  <!-- Live Data Point (Appears after animation) -->
-                  <circle cx="300" cy="30" class="chart-dot" />
-                  <circle cx="300" cy="30" class="chart-live-dot" />
-                  
-                  <!-- Tooltip -->
-                  <rect x="265" y="10" width="30" height="14" class="chart-tooltip-bg" />
-                  <text x="280" y="20" class="chart-tooltip-text">$4.2k</text>
-                </svg>
-              </div>
-
-              <table class="m1-table">
-                <thead><tr><th class="m1-th">Project</th><th class="m1-th">Status</th><th class="m1-th">Amount</th></tr></thead>
-                <tbody>
-                  <tr><td class="m1-td">Website Redesign</td><td class="m1-td"><span class="m1-status live">Live</span></td><td class="m1-td">$1,200</td></tr>
-                  <tr><td class="m1-td">Mobile App</td><td class="m1-td"><span class="m1-status pending">Pending</span></td><td class="m1-td">$3,400</td></tr>
-                  <tr><td class="m1-td">SEO Audit</td><td class="m1-td"><span class="m1-status live">Live</span></td><td class="m1-td">$800</td></tr>
-                </tbody>
-              </table>
-            </div>
+            <div class="bu-footer">Made by Gajee Hub</div>
           </div>
         </div>
         <div class="work-info">
-          <h3>Novadata</h3>
-          <p>Analytics Dashboard UI</p>
+          <h3>Between Us</h3>
+          <p>This is one of my projects · React & Tailwind</p>
         </div>
       </div>
 
-      <!-- 2. Luxury Fashion (Kept) -->
+      <!-- 2. Pass or Confess (Game App) -->
       <div class="work-item reveal reveal-delay-1">
         <div class="device-frame">
           <div class="browser-header">
             <div class="dot red"></div>
             <div class="dot yellow"></div>
             <div class="dot green"></div>
-            <div class="address-bar">www.auraboutique.com</div>
+            <div class="address-bar">pass-or-confess.game</div>
           </div>
           <div class="mockup-viewport mockup-2">
-            <div class="m2-nav">
-              <span>AURA.</span>
-              <div>CART (0)</div>
+            <div class="poc-bg"></div>
+            <div class="poc-content">
+              <div class="poc-title">PASS OR<br>CONFESS</div>
+              <div class="poc-sub">Truth. Pressure. Chaos.</div>
+              <div class="poc-btn-primary">Play Game</div>
+              <div class="poc-btn-secondary">How to Play</div>
             </div>
-            <div class="m2-hero">
-              <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=600&auto=format&fit=crop" alt="Fashion">
-              <div class="m2-hero-text">
-                <div class="m2-h1">AUTUMN COLLECTION</div>
-                <div class="m2-sub">Minimalist aesthetics for modern living</div>
-              </div>
-            </div>
-            <div class="m2-products">
-              <div class="m2-item">
-                <div class="m2-img"><img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=300&auto=format&fit=crop" alt="Coat"></div>
-                <div class="m2-title">Wool Trench</div>
-                <div class="m2-price">$240.00</div>
-                <div class="m2-btn">ADD TO BAG</div>
-              </div>
-              <div class="m2-item">
-                <div class="m2-img"><img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=300&auto=format&fit=crop" alt="Jacket"></div>
-                <div class="m2-title">Leather Jacket</div>
-                <div class="m2-price">$185.00</div>
-                <div class="m2-btn">ADD TO BAG</div>
-              </div>
-            </div>
+            <div class="poc-footer">Made by Gajee Hub</div>
           </div>
         </div>
         <div class="work-info">
-          <h3>Aura Boutique</h3>
-          <p>E-Commerce Experience</p>
+          <h3>Pass or Confess</h3>
+          <p>Party Game Concept · HTML/CSS/JS</p>
         </div>
       </div>
 
