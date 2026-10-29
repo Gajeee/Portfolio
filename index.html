@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gajee | Computer Science student</title>
+<meta name="description" content="Gajee (Gajenes Asitambi), computer science student at UNITEN heading toward cybersecurity and AI. Web projects and UI/UX work.">
+<link rel="icon" type="image/jpeg" href="logo.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #e9e8e3;
+  --ink: #0e0e0d;
+  --muted: #5f5e58;
+  --line: #0e0e0d;
+  --soft: rgba(14, 14, 13, 0.16);
+  --hi: #f2e640;
+  --display: "Archivo", "Arial Narrow", Impact, sans-serif;
+  --sans: "Inter Tight", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #151514;
+    --ink: #ecebe6;
+    --muted: #9b9a92;
+    --line: #5a5953;
+    --soft: rgba(236, 235, 230, 0.14);
+  }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--sans); font-size: 1rem; line-height: 1.55;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+::selection { background: var(--hi); color: #0e0e0d; }
+.mono { font-family: var(--mono); font-size: .74rem; letter-spacing: .01em; }
+.muted { color: var(--muted); }
+.ul { border-bottom: 1px solid currentColor; }
+.ul:hover { background: var(--hi); color: #0e0e0d; border-color: #0e0e0d; }
+
+/* image boxes */
+.media { position: relative; overflow: hidden; background: color-mix(in srgb, var(--ink) 9%, var(--bg)); }
+.media > img { width: 100%; height: 100%; object-fit: cover; }
+.media.noimg::after {
+  content: attr(data-miss) " not found";
+  position: absolute; right: 10px; bottom: 8px;
+  font-family: var(--mono); font-size: .64rem; color: var(--muted);
+}
+
+/* ---------- sheet: everything lives on one ruled grid ---------- */
+.sheet {
+  width: calc(100% - 32px); max-width: 1400px; margin: 72px auto 16px;
+  border: 1px solid var(--line); background: var(--line);
+  display: grid; gap: 1px;
+}
+.band { background: var(--bg); }
+.grid { display: grid; gap: 1px; background: var(--line); }
+.g2 { grid-template-columns: repeat(2, 1fr); }
+.g3 { grid-template-columns: repeat(3, 1fr); }
+.g4 { grid-template-columns: repeat(4, 1fr); }
+.cell { background: var(--bg); padding: 24px; }
+.head { display: grid; grid-template-columns: 1fr 4fr; gap: 1px; background: var(--line); }
+.head .lab { background: var(--bg); padding: 24px; display: flex; align-items: flex-end; color: var(--muted); }
+.head h2 {
+  background: var(--bg); padding: 24px 24px 20px;
+  font-family: var(--display); font-weight: 800; font-size: clamp(2.1rem, 5.2vw, 4.4rem);
+  line-height: .95; letter-spacing: -.035em; font-variation-settings: "wdth" 88;
+}
+@media (max-width: 900px) {
+  .g3 { grid-template-columns: repeat(2, 1fr); }
+  .g3 > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .g4 { grid-template-columns: repeat(2, 1fr); }
+  .head { grid-template-columns: 1fr; }
+  .head .lab { padding-bottom: 0; }
+}
+@media (max-width: 600px) {
+  .g2, .g3, .g4 { grid-template-columns: 1fr; }
+  .g3 > :last-child:nth-child(odd) { grid-column: auto; }
+  .cell { padding: 20px; }
+}
+
+/* ---------- nav ---------- */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 90; height: 52px;
+  display: flex; align-items: stretch; background: var(--bg); border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; align-items: center; gap: 10px; padding: 0 20px; border-right: 1px solid var(--line); font-family: var(--display); font-weight: 900; font-size: 1.15rem; letter-spacing: -.02em; }
+.brand .media { width: 24px; height: 24px; }
+.links { display: flex; flex: 1; }
+.links a { display: flex; align-items: center; padding: 0 18px; border-right: 1px solid var(--line); font-family: var(--mono); font-size: .74rem; transition: background .15s; }
+.links a:hover, .links a.active { background: var(--hi); color: #0e0e0d; }
+.menu-btn { display: none; margin-left: auto; padding: 0 18px; border: 0; border-left: 1px solid var(--line); background: none; color: var(--ink); font-family: var(--mono); font-size: .74rem; cursor: pointer; }
+@media (max-width: 900px) {
+  .menu-btn { display: block; }
+  .links { display: none; position: absolute; top: 52px; left: 0; right: 0; flex-direction: column; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .links.open { display: flex; }
+  .links a { padding: 15px 20px; border-right: 0; border-bottom: 1px solid var(--soft); }
+}
+
+/* ---------- hero ---------- */
+.hero-top { display: flex; justify-content: space-between; gap: 16px; padding: 14px 24px; border-bottom: 1px solid var(--line); color: var(--muted); flex-wrap: wrap; }
+.hero-name {
+  display: flex; justify-content: space-between;
+  padding: 26px 24px 10px; overflow: hidden;
+  font-family: var(--display); font-weight: 900; font-variation-settings: "wdth" 72;
+  font-size: clamp(4rem, 25vw, 23rem); line-height: .8; letter-spacing: -.02em; text-transform: uppercase;
+}
+.ltr { display: inline-block; padding: 0 .02em; transition: background .12s, transform .25s; cursor: default; }
+.ltr:hover { background: var(--hi); color: #0e0e0d; transform: translateY(-.05em); }
+.hero-grid { display: grid; grid-template-columns: 4fr 5fr 4fr; gap: 1px; background: var(--line); border-top: 1px solid var(--line); }
+.photo { position: relative; aspect-ratio: 4 / 5; }
+.photo img { position: absolute; inset: 0; transition: opacity .6s ease, transform .6s ease; }
+.photo img.alt { opacity: 0; }
+@media (hover: hover) and (pointer: fine) {
+  .photo:hover img.base { opacity: 0; }
+  .photo:hover img.alt { opacity: 1; transform: scale(1.04); }
+}
+.photo.swap img.base { opacity: 0; }
+.photo.swap img.alt { opacity: 1; }
+.photo .cap { position: absolute; left: 0; bottom: 0; z-index: 2; background: var(--bg); padding: 8px 14px; border-top: 1px solid var(--line); border-right: 1px solid var(--line); }
+.statement { display: flex; flex-direction: column; justify-content: space-between; gap: 32px; }
+.statement p.big { font-family: var(--display); font-weight: 600; font-variation-settings: "wdth" 92; font-size: clamp(1.45rem, 2.5vw, 2.2rem); line-height: 1.1; letter-spacing: -.025em; }
+.statement .acts { display: flex; gap: 22px; flex-wrap: wrap; font-family: var(--mono); font-size: .78rem; }
+.spec { padding: 0; }
+.kv { display: grid; grid-template-columns: 104px 1fr; gap: 12px; padding: 14px 24px; border-bottom: 1px solid var(--soft); }
+.kv:last-child { border-bottom: 0; }
+.kv dt { color: var(--muted); font-family: var(--mono); font-size: .72rem; padding-top: 3px; }
+.kv dd { font-weight: 500; }
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .photo { aspect-ratio: 4 / 3.4; }
+}
+
+/* ---------- about ---------- */
+.credo { grid-column: 1 / -1; padding: 40px 24px 44px; font-family: var(--display); font-weight: 700; font-variation-settings: "wdth" 90; font-size: clamp(1.8rem, 4.4vw, 3.8rem); line-height: 1.02; letter-spacing: -.03em; max-width: none; }
+.cell h3 { font-family: var(--mono); font-weight: 500; font-size: .74rem; color: var(--muted); margin-bottom: 10px; }
+.cell p { font-size: .98rem; }
+.cell p a { border-bottom: 1px solid currentColor; }
+.cell p a:hover { background: var(--hi); color: #0e0e0d; border-color: #0e0e0d; }
+.num b { display: block; font-family: var(--display); font-weight: 900; font-variation-settings: "wdth" 80; font-size: clamp(3.4rem, 7vw, 6rem); line-height: .9; letter-spacing: -.04em; }
+.num span { color: var(--muted); }
+
+/* ---------- skills ---------- */
+.list li { list-style: none; display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-top: 1px solid var(--soft); }
+.list li:first-child { border-top: 1px solid var(--line); }
+.list li span { color: var(--muted); font-size: .85rem; }
+
+/* ---------- work tiles ---------- */
+.tile { display: flex; flex-direction: column; background: var(--bg); }
+.t-img { aspect-ratio: 16 / 10; border-bottom: 1px solid var(--line); }
+.t-img img { object-position: top center; transition: transform .6s ease; }
+.tile:hover .t-img img { transform: scale(1.04); }
+.t-body { padding: 18px 22px 24px; flex: 1; transition: background .2s; }
+.tile:hover .t-body { background: var(--hi); color: #0e0e0d; }
+.t-top { display: flex; justify-content: space-between; color: var(--muted); }
+.tile:hover .t-top, .tile:hover .t-desc { color: #2b2a24; }
+.t-name { font-family: var(--display); font-weight: 800; font-variation-settings: "wdth" 88; font-size: 2rem; line-height: 1; letter-spacing: -.03em; margin: 12px 0 6px; }
+.t-tag { font-weight: 600; font-size: .96rem; line-height: 1.3; }
+.t-desc { margin-top: 12px; color: var(--muted); font-size: .88rem; line-height: 1.55; }
+
+/* ---------- learning table ---------- */
+.t-row { display: grid; grid-template-columns: 56px 1.1fr .8fr 2.6fr 2.2fr; gap: 1px; background: var(--line); }
+.t-row > div { background: var(--bg); padding: 18px 20px; }
+.t-row.hd > div { padding: 12px 20px; color: var(--muted); }
+.t-row .nm { font-family: var(--display); font-weight: 800; font-variation-settings: "wdth" 88; font-size: 1.45rem; line-height: 1.05; letter-spacing: -.02em; }
+.t-row p { font-size: .92rem; color: var(--muted); }
+.t-row p a { color: var(--ink); border-bottom: 1px solid currentColor; }
+.t-row p a:hover { background: var(--hi); color: #0e0e0d; border-color: #0e0e0d; }
+@media (max-width: 900px) {
+  .t-row { grid-template-columns: 1fr; }
+  .t-row.hd { display: none; }
+  .t-row > div { padding: 10px 20px; }
+  .t-row > div:first-child { padding-top: 18px; padding-bottom: 0; }
+  .t-row > div:last-child { padding-bottom: 18px; }
+  .t-row > div[data-l]::before { content: attr(data-l); display: block; font-family: var(--mono); font-size: .68rem; color: var(--muted); margin-bottom: 3px; }
+}
+
+/* ---------- clients ---------- */
+.client { display: flex; flex-direction: column; background: var(--bg); }
+.c-img { aspect-ratio: 16 / 10; border-bottom: 1px solid var(--line); }
+.c-img img { object-position: top center; transition: transform .6s ease; }
+a.client:hover .c-img img { transform: scale(1.04); }
+.c-body { padding: 18px 22px 24px; flex: 1; transition: background .2s; }
+a.client:hover .c-body { background: var(--hi); color: #0e0e0d; }
+a.client:hover .c-body .muted { color: #2b2a24; }
+.c-body h3 { font-family: var(--display); font-weight: 800; font-variation-settings: "wdth" 88; font-size: 1.7rem; line-height: 1; letter-spacing: -.03em; display: flex; justify-content: space-between; gap: 10px; }
+.c-body p { margin-top: 8px; }
+.c-body .u { display: block; margin-top: 10px; }
+
+/* ---------- explore / contact ---------- */
+.ex { display: block; background: var(--bg); padding: 24px; transition: background .2s; min-height: 170px; }
+.ex:hover { background: var(--hi); color: #0e0e0d; }
+.ex:hover .muted { color: #2b2a24; }
+.ex .top { display: flex; justify-content: space-between; color: var(--muted); }
+.ex:hover .top { color: #2b2a24; }
+.ex b { display: block; margin: 36px 0 4px; font-family: var(--display); font-weight: 800; font-variation-settings: "wdth" 88; font-size: 1.8rem; line-height: 1; letter-spacing: -.03em; }
+.say { padding: 44px 24px 36px; }
+.say p { font-family: var(--display); font-weight: 700; font-variation-settings: "wdth" 90; font-size: clamp(1.6rem, 3.6vw, 3rem); line-height: 1.02; letter-spacing: -.03em; max-width: 780px; }
+.mail { display: block; background: var(--bg); padding: 26px 24px 30px; font-family: var(--display); font-weight: 900; font-variation-settings: "wdth" 80; font-size: clamp(1.7rem, 6.2vw, 5.6rem); line-height: 1; letter-spacing: -.035em; word-break: break-all; transition: background .2s; }
+.mail:hover { background: var(--hi); color: #0e0e0d; }
+.soc { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; background: var(--bg); font-family: var(--mono); font-size: .78rem; transition: background .2s; }
+.soc:hover { background: var(--hi); color: #0e0e0d; }
+.foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 16px 24px; color: var(--muted); background: var(--bg); }
+
+a:focus-visible, button:focus-visible { outline: 3px solid var(--ink); outline-offset: -3px; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#top" class="brand"><span class="media"><img data-img="logo" alt="Gajee logo"></span>GAJEE</a>
+  <div class="links" id="links">
+    <a href="#about" data-s="about">About</a>
+    <a href="#skills" data-s="skills">Skills</a>
+    <a href="#work" data-s="work">Work</a>
+    <a href="#projects" data-s="projects">Projects</a>
+    <a href="#clients" data-s="clients">Clients</a>
+    <a href="#explore" data-s="explore">Explore</a>
+    <a href="#contact" data-s="contact">Contact</a>
+  </div>
+  <button class="menu-btn" id="menuBtn" aria-label="Menu">Menu</button>
+</nav>
+
+<main class="sheet">
+
+<!-- HERO -->
+<section class="band" id="top" data-w="top">
+  <div class="hero-top mono"><span>Computer Science student</span><span>Open to opportunities</span></div>
+  <div class="hero-name" aria-label="Gajee"><span class="ltr">G</span><span class="ltr">A</span><span class="ltr">J</span><span class="ltr">E</span><span class="ltr">E</span></div>
+  <div class="hero-grid">
+    <div class="photo media" id="photo">
+      <img class="base" data-img="snowme" alt="Gajenes Asitambi">
+      <img class="alt" data-img="snowmeII" alt="">
+      <span class="cap mono">Gajenes Asitambi</span>
+    </div>
+    <div class="cell statement">
+      <p class="big">Computer science student at UNITEN, working toward cybersecurity and AI. I build small web projects, practise Python, Java and C, and live in the Linux terminal. Fundamentals first, trends later.</p>
+      <div class="acts"><a class="ul" href="#work">See my work &darr;</a><a class="ul" href="#contact">Get in touch</a></div>
+    </div>
+    <dl class="cell spec">
+      <div class="kv"><dt>Name</dt><dd>Gajenes Asitambi</dd></div>
+      <div class="kv"><dt>Studying</dt><dd>Computer Science, UNITEN</dd></div>
+      <div class="kv"><dt>Trained at</dt><dd>MICOST</dd></div>
+      <div class="kv"><dt>Focus</dt><dd>Cybersecurity, AI</dd></div>
+      <div class="kv"><dt>Languages</dt><dd>Python, Java, C</dd></div>
+      <div class="kv"><dt>Status</dt><dd>Open to opportunities</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="band" id="about" data-w="about">
+  <div class="head"><div class="lab mono">01 / about</div><h2>About me.</h2></div>
+  <div class="grid g3">
+    <p class="credo cell">Understand the logic first, structure the approach, then write the code.</p>
+    <div class="cell">
+      <h3>foundation</h3>
+      <p>Studying Computer Science at <a href="https://www.uniten.edu.my" target="_blank" rel="noopener">UNITEN</a>. I'm building a solid base in programming and problem solving before chasing what's trending.</p>
+    </div>
+    <div class="cell">
+      <h3>training</h3>
+      <p>Before that I trained at <a href="https://micost.edu.my/v2/index.php/" target="_blank" rel="noopener">MICOST</a> under Sarjudin Yee. That's where I learned to put logic before syntax and structure before code.</p>
+    </div>
+    <div class="cell">
+      <h3>direction</h3>
+      <p>Long term I want to work in cybersecurity and artificial intelligence. I'm learning both from the fundamentals up, through real-world reasoning rather than surface-level tutorials.</p>
+    </div>
+    <div class="cell num"><b>30+</b><span>programs written</span></div>
+    <div class="cell num"><b>15</b><span>academic projects</span></div>
+    <div class="cell num"><b>3</b><span>years focused</span></div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="band" id="skills" data-w="skills">
+  <div class="head"><div class="lab mono">02 / skills</div><h2>What I work with.</h2></div>
+  <div class="grid g3">
+    <div class="cell"><h3>languages</h3><ul class="list"><li>Python <span>main one</span></li><li>Java</li><li>C</li></ul></div>
+    <div class="cell"><h3>tools</h3><ul class="list"><li>VS Code</li><li>Linux terminal</li><li>Git</li></ul></div>
+    <div class="cell"><h3>focus</h3><ul class="list"><li>Cybersecurity <span>studying</span></li><li>Applied AI <span>studying</span></li><li>Algorithms</li></ul></div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="band" id="work" data-w="work">
+  <div class="head"><div class="lab mono">03 / work</div><h2>Selected UI/UX work.</h2></div>
+  <div class="grid g3" id="tiles"></div>
+</section>
+
+<!-- LEARNING PROJECTS -->
+<section class="band" id="projects" data-w="projects">
+  <div class="head"><div class="lab mono">04 / projects</div><h2>Built while learning.</h2></div>
+  <div class="grid" style="grid-template-columns:1fr">
+    <div class="t-row hd mono"><div>#</div><div>Project</div><div>Stack</div><div>What it was</div><div>What I learned</div></div>
+    <div class="t-row">
+      <div class="mono muted">01</div>
+      <div class="nm">BMI Calculator</div>
+      <div class="mono" data-l="stack">Java, Python</div>
+      <div data-l="what it was"><p>Built at UNITEN for Algorithmic Problem Solving under Nur Hanani Binti Hazami. The focus was algorithm design, edge-case handling and clean input validation. Inspired by <a href="https://github.com/john-smilga" target="_blank" rel="noopener">John Smilga</a>.</p></div>
+      <div data-l="what I learned"><p>How to handle invalid input and boundary values properly.</p></div>
+    </div>
+    <div class="t-row">
+      <div class="mono muted">02</div>
+      <div class="nm">Music Player</div>
+      <div class="mono" data-l="stack">Web UI</div>
+      <div data-l="what it was"><p>Exploring UI flow and interaction design. Inspired by <a href="https://github.com/bradtraversy" target="_blank" rel="noopener">Brad Traversy</a>.</p></div>
+      <div data-l="what I learned"><p>Designing simple states: play/pause, progress, track changes.</p></div>
+    </div>
+    <div class="t-row">
+      <div class="mono muted">03</div>
+      <div class="nm">Chat App</div>
+      <div class="mono" data-l="stack">Web</div>
+      <div data-l="what it was"><p>Real-time messaging fundamentals. Inspired by <a href="https://github.com/socketio" target="_blank" rel="noopener">Socket.IO</a>.</p></div>
+      <div data-l="what I learned"><p>How real-time event flow works: emit, receive, broadcast.</p></div>
+    </div>
+    <div class="t-row">
+      <div class="mono muted">04</div>
+      <div class="nm">Note App</div>
+      <div class="mono" data-l="stack">Web</div>
+      <div data-l="what it was"><p>Structure and persistence exploration. Inspired by <a href="https://github.com/typicode" target="_blank" rel="noopener">Typicode</a>.</p></div>
+      <div data-l="what I learned"><p>Basic persistence thinking: save, edit, delete, kept clean.</p></div>
+    </div>
+    <div class="t-row">
+      <div class="mono muted">05</div>
+      <div class="nm">Calculator</div>
+      <div class="mono" data-l="stack">Web</div>
+      <div data-l="what it was"><p>Arithmetic logic practice. Inspired by <a href="https://github.com/WebDevSimplified" target="_blank" rel="noopener">Web Dev Simplified</a>.</p></div>
+      <div data-l="what I learned"><p>Input validation discipline, so wrong calculations don't slip through.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section class="band" id="clients" data-w="clients">
+  <div class="head"><div class="lab mono">05 / clients</div><h2>UI/UX for other people.</h2></div>
+  <div class="grid g3" id="clientGrid"></div>
+</section>
+
+<!-- EXPLORE -->
+<section class="band" id="explore" data-w="explore">
+  <div class="head"><div class="lab mono">06 / explore</div><h2>Reading up on.</h2></div>
+  <div class="grid g3">
+    <a class="ex" href="https://www.reddit.com/r/Python/" target="_blank" rel="noopener"><div class="top mono"><span>01</span><span>&nearr;</span></div><b>r/Python</b><span class="muted">Writing cleaner, more intentional Python code.</span></a>
+    <a class="ex" href="https://www.reddit.com/r/linux/" target="_blank" rel="noopener"><div class="top mono"><span>02</span><span>&nearr;</span></div><b>r/linux</b><span class="muted">Understanding systems and terminal workflows.</span></a>
+    <a class="ex" href="https://www.reddit.com/r/java/" target="_blank" rel="noopener"><div class="top mono"><span>03</span><span>&nearr;</span></div><b>r/java</b><span class="muted">Strengthening object-oriented structure.</span></a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="band" id="contact" data-w="contact">
+  <div class="head"><div class="lab mono">07 / contact</div><h2>Say hello.</h2></div>
+  <div class="grid" style="grid-template-columns:1fr">
+    <div class="say" style="background:var(--bg)"><p>Building something? Let's talk about it.</p></div>
+    <a class="mail" href="mailto:gajenes10@gmail.com">gajenes10@gmail.com</a>
+    <div class="grid g4">
+      <a class="soc" href="https://www.linkedin.com/in/gajenes-asitambi-411049347" target="_blank" rel="noopener"><span>LinkedIn</span><span>&nearr;</span></a>
+      <a class="soc" href="https://github.com/Gajeee" target="_blank" rel="noopener"><span>GitHub</span><span>&nearr;</span></a>
+      <a class="soc" href="https://www.instagram.com/gajeness" target="_blank" rel="noopener"><span>Instagram</span><span>&nearr;</span></a>
+      <a class="soc" href="https://www.facebook.com/profile.php?id=100075273147489" target="_blank" rel="noopener"><span>Facebook</span><span>&nearr;</span></a>
+    </div>
+  </div>
+</section>
+
+<footer class="band foot mono"><span>&copy; <span id="yr"></span> Gajenes Asitambi</span><a href="#top" class="ul">Back to top &uarr;</a></footer>
+
+</main>
+
+<script>
+(function () {
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* ===== Paste Himasara's portfolio link here when you have it ===== */
+  var HIMASARA_LINK = '';
+  /* ================================================================== */
+
+  /* Image loader: tries jpeg / jpg / png / webp so the extension doesn't matter */
+  var EXTS = ['jpeg', 'jpg', 'JPEG', 'JPG', 'png', 'PNG', 'webp'];
+  function loadImg(img, base) {
+    var i = 0, p = img.parentElement;
+    if (p) p.setAttribute('data-miss', base + '.jpeg');
+    img.onerror = function () {
+      i++;
+      if (i < EXTS.length) { img.src = encodeURI(base + '.' + EXTS[i]); }
+      else { img.onerror = null; img.style.display = 'none'; if (p) p.classList.add('noimg'); }
+    };
+    img.src = encodeURI(base + '.' + EXTS[0]);
+  }
+
+  /* Selected UI/UX work */
+  var projects = [
+    { name: 'Between Us', tag: 'Deeper connections, one question at a time.', img: 'project1',
+      desc: 'An intimate icebreaker game designed to spark meaningful conversations, shared laughs, and unforgettable moments between close friends and couples. More than 3K views a week.',
+      link: 'https://gajeee.github.io/BetweenUS/' },
+    { name: 'Pass or Confess', tag: 'Reveal your secrets or take the sip.', img: 'project2',
+      desc: 'The ultimate party starter combining classic icebreakers with party-game stakes. Spill your juicy truths or take a drink, the choice is yours. About 7K views a week.',
+      link: 'https://gajeee.github.io/PASS-OR-CONFESS/' },
+    { name: 'Velvet Proof', tag: 'Your personal digital ledger for fine drinks.', img: 'project3',
+      desc: 'A sleek, bar-inspired drink rating platform where enthusiasts can review, track, and curate their favorite cocktails, spirits, and brews with sophisticated ease.',
+      link: 'https://gajeee.github.io/Velvet-Proof-by-Ghub/' },
+    { name: '1986 Cafe', tag: 'Modern taste meets timeless Malaysian heritage.', img: 'project4',
+      desc: 'The official digital home of 1986 Cafe. Explore an artisanal menu, discover local story-driven brews, and reserve a table for a cozy, authentic culinary experience.',
+      link: 'https://gajeee.github.io/1986-cafe/' },
+    { name: 'Archive.net', tag: 'Some files were meant to stay buried.', img: 'project5',
+      desc: 'An immersive retro horror ARG set in the early digital frontier of 2003. Uncover disturbing lost media, navigate cryptic directory trees, and piece together the narrative hidden within forgotten web archives.',
+      link: 'https://gajeee.github.io/ArchiveNet/' },
+    { name: 'G21', tag: 'Pure, high-stakes Blackjack stripped to its essence.', img: 'project6',
+      desc: 'A minimalist, casino-style Blackjack experience focused on crisp visuals, seamless game feel, and strategic play without unnecessary clutter.',
+      link: 'https://github.com/Gajeee/G21' },
+    { name: 'Gnote', tag: "Every semester's essentials, in one quiet place.", img: 'project7',
+      desc: 'A static notes-sharing hub built for Computer Science students: clean, searchable, and stripped of clutter. Gnote gathers essential lecture notes and study material into one calm reference point for exam season and beyond.',
+      link: 'https://gajeee.github.io/Gnote/#/' },
+    { name: 'Kad Untuk Tak Sihat', tag: 'The party card game for terrible Malaysians.', img: 'project8',
+      desc: 'A single-file, browser-based, P2P multiplayer party game inspired by Cards Against Humanity, remixed with unfiltered Manglish and Malaysian slang. No server, no install: just open the page and play with friends over Wi-Fi, or solo against AI bots. Mature Malaysian humor throughout, 18+.',
+      link: 'https://gajeee.github.io/KUTS/' },
+    { name: 'GiFi', tag: 'Check your Wi-Fi, then push your hardware.', img: 'project9',
+      desc: 'A Wi-Fi speed checker in a single HTML file. It measures download, upload, latency and jitter, shows your IP and provider, and tells you what video quality your connection can handle. It also has a network security audit and a CPU and GPU stress test. No dependencies, no build step, no backend.',
+      link: 'https://gajeee.github.io/GIFI/' }
+  ];
+  var tiles = document.getElementById('tiles');
+  projects.forEach(function (p, i) {
+    var a = document.createElement('a');
+    a.className = 'tile';
+    a.href = p.link; a.target = '_blank'; a.rel = 'noopener';
+    var n = (i + 1 < 10 ? '0' : '') + (i + 1);
+    a.innerHTML =
+      '<div class="t-img media"><img alt="' + p.name + '"></div>' +
+      '<div class="t-body">' +
+        '<div class="t-top mono"><span>' + n + '</span><span>&nearr;</span></div>' +
+        '<div class="t-name">' + p.name + '</div>' +
+        '<div class="t-tag">' + p.tag + '</div>' +
+        '<p class="t-desc">' + p.desc + '</p>' +
+      '</div>';
+    tiles.appendChild(a);
+    loadImg(a.querySelector('img'), p.img);
+  });
+
+  /* UI/UX for other people */
+  var clients = [
+    { name: 'Darwin, Workout Tracker', desc: 'UI/UX for a fitness and workout tracking site.', img: 'client1',
+      link: 'https://darwinm15.github.io/workout/', url: 'darwinm15.github.io/workout' },
+    { name: 'Daaneswaran, Portfolio', desc: 'UI/UX for a personal portfolio site.', img: 'client2',
+      link: 'https://daaneswaran.github.io/Portfolio/', url: 'daaneswaran.github.io/Portfolio' },
+    { name: 'Himasara, Portfolio', desc: "UI/UX for a photographer's portfolio site.", img: 'client3',
+      link: HIMASARA_LINK, url: HIMASARA_LINK.replace(/^https?:\/\//, '').replace(/\/$/, '') }
+  ];
+  var cg = document.getElementById('clientGrid');
+  clients.forEach(function (c) {
+    var el = document.createElement(c.link ? 'a' : 'div');
+    el.className = 'client';
+    if (c.link) { el.href = c.link; el.target = '_blank'; el.rel = 'noopener'; }
+    el.innerHTML =
+      '<div class="c-img media"><img alt="' + c.name + '"></div>' +
+      '<div class="c-body">' +
+        '<h3>' + c.name + (c.link ? '<span>&nearr;</span>' : '') + '</h3>' +
+        '<p class="muted">' + c.desc + '</p>' +
+        '<span class="u mono muted">' + (c.link ? c.url : 'link coming soon') + '</span>' +
+      '</div>';
+    cg.appendChild(el);
+    loadImg(el.querySelector('img'), c.img);
+  });
+
+  document.querySelectorAll('img[data-img]').forEach(function (img) { loadImg(img, img.getAttribute('data-img')); });
+
+  /* Mobile menu */
+  var btn = document.getElementById('menuBtn'), links = document.getElementById('links');
+  btn.addEventListener('click', function () {
+    var o = links.classList.toggle('open');
+    btn.textContent = o ? 'Close' : 'Menu';
+  });
+  links.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () { links.classList.remove('open'); btn.textContent = 'Menu'; });
+  });
+
+  /* Active section in nav */
+  var navA = document.querySelectorAll('[data-s]');
+  var secObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) {
+        var id = en.target.getAttribute('data-w');
+        navA.forEach(function (a) { a.classList.toggle('active', a.dataset.s === id); });
+      }
+    });
+  }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+  document.querySelectorAll('[data-w]').forEach(function (s) { secObs.observe(s); });
+
+  /* Portrait: tap to swap on touch screens */
+  var photo = document.getElementById('photo');
+  if (window.matchMedia('(pointer: coarse)').matches) {
+    photo.addEventListener('touchstart', function () { photo.classList.add('swap'); }, { passive: true });
+    photo.addEventListener('touchend', function () { setTimeout(function () { photo.classList.remove('swap'); }, 700); }, { passive: true });
+    photo.addEventListener('touchcancel', function () { photo.classList.remove('swap'); }, { passive: true });
+  }
+})();
+</script>
+</body>
+</html>
